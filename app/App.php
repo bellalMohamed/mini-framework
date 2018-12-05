@@ -17,6 +17,9 @@ class App
 			'response' => function () {
 				return new Response;
 			},
+			'view' => function () {
+				return new View;
+			}
 		]);
 	}
 
@@ -61,13 +64,14 @@ class App
 	protected function process($callable)
 	{
 		$response = $this->container->response;
+		$view = $this->container->view;
 		if (is_array($callable)) {
 			if (!is_object($callable[0])) {
 				$callable[0] = new $callable[0];
 			}
-			return call_user_func($callable, $response);
+			return call_user_func($callable, $response, $view);
 		}
-		return $callable($response);
+		return $callable($response, $view);
 	}
 
 	protected function respond($response)
@@ -79,10 +83,18 @@ class App
 			''
 		));
 
+		if ($response instanceof View) {
+			require_once 'Views/'.$response->getViewPath();
+			
+			return;
+		}
+
 		if (!$response instanceof Response) {
 			echo $response;
 			return;
 		}
+
+		
 
 		foreach ($response->getHeaders() as $header) {
 			header("{$header[0]}: {$header[0]}");

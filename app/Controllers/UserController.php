@@ -6,16 +6,18 @@ use PDO;
 
 class UserController
 {
+	protected $db;
+
 	public function __construct(PDO $db)
 	{
-		var_dump($db);
-		die();
+		$this->db = $db;
 	}
 
-	public function index($response)
+	public function index($response, $view)
 	{
-		return $response->withJson([
-			'error' => false,
-		]);
+		// var_dump($view);
+		// die();
+		return $view->load('users');
+		// $useers = $this->db->query(SELECT * FROM )
 	}
 }
