@@ -7,6 +7,7 @@ use App\View;
 
 class Controller {
 	public static $db;
+	public static $response;
 	public static $view;
 	public static $container;
 
@@ -15,6 +16,7 @@ class Controller {
 		self::$container = $container;
 		self::$db = $container->db;
 		self::$view = $container->view;
+		self::$response = $container->response;
 	}
 
 	public static function getDB() 
@@ -25,5 +27,10 @@ class Controller {
 	public function view($view, array $vars = [])
 	{
 		return self::$view->load($view, $vars);
+	}
+
+	public function response()
+	{
+		return self::$response;
 	}
 }

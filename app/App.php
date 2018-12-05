@@ -19,6 +19,9 @@ class App
 			},
 			'view' => function () {
 				return new View;
+			},
+			'request' => function () {
+				return new Request;
 			}
 		]);
 	}
@@ -63,43 +66,42 @@ class App
 
 	protected function process($callable)
 	{
+		$request = $this->container->request;
 		$response = $this->container->response;
 		if (!is_callable($callable)) {
 			$callable = explode('@', $callable);
 			if (!is_object($callable[0])) {
 				$callable[0] = new $callable[0]($this->container);
 			}
-			return call_user_func($callable, $response);
+			return call_user_func($callable, $request, $response);
 		}
-		return $callable($response);
+		return $callable($request, $response);
 	}
 
 	protected function respond($response)
 	{
-		header(sprintf(
-			'HTTP/%s %s %s',
-			'1.1',
-			$response->getStatusCode(),
-			''
-		));
-
 		if ($response instanceof View) {
 			$response->compileView();
-			// require_once 'Views/'.$response->getViewPath();
 			return;
 		}
 
-		if (!$response instanceof Response) {
-			echo $response;
+
+		if ($response instanceof Response) {
+			header(sprintf(
+				'HTTP/%s %s %s',
+				'1.1',
+				$response->getStatusCode(),
+				''
+			));
+			
+			foreach ($response->getHeaders() as $header) {
+				header("{$header[0]}: {$header[0]}");
+			}
+
+			echo $response->getBody();
 			return;
-		}
+		}		
 
-		
-
-		foreach ($response->getHeaders() as $header) {
-			header("{$header[0]}: {$header[0]}");
-		}
-
-		echo $response->getBody();
+		echo $response;
 	}
 }

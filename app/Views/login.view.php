@@ -5,6 +5,10 @@
 	<title>Login</title>
 </head>
 <body>
-	Login Page
+	<?php 
+		foreach ($users as $user) {
+			echo "<p>{$user->name}</p>";
+		}
+	?>
 </body>
 </html>

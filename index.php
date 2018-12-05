@@ -20,7 +20,7 @@ $container['config'] = function () {
 	return [
 		'db_driver' => 'mysql',
 		'db_host' => 'localhost',
-		'db_name' => 'hospital',
+		'db_name' => 'zeal',
 		'db_user' => 'phpmyadmin',
 		'db_pass' => 'root',
 	];

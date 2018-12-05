@@ -1,18 +1,23 @@
 <?php
 
 use App\Controllers\Controller;
+use App\Models\User;
+use App\Request;
 
 class UserController extends Controller
 {
-	public function index()
+	public function index(Request $request)
 	{
-		return $this->view('users', [
-			'name' => 'Bellal'
-		]);
+		$result = $this->getDB()->query('SELECT * FROM users')->fetchAll(PDO::FETCH_CLASS, User::class);
+		return $this->response()->json($result);
 	}
 
 	public function loginIndex()
 	{
-		return $this->view('login');
+		$users = $this->getDB()->query('SELECT * FROM users')->fetchAll(PDO::FETCH_CLASS, User::class);
+
+		return $this->view('login', [
+			'users' => $users,
+		]);
 	}
 }

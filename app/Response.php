@@ -30,7 +30,7 @@ class Response
 		return $this->statusCode;
 	}
 
-	public function withJson($body)
+	public function json($body)
 	{
 		$this->withHeader('Content-Type', 'application/json');
 
