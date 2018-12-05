@@ -29,7 +29,14 @@ $container['config'] = function () {
 $container['db'] = function ($c) {
 	return new PDO("{$c->config['db_driver']}:host={$c->config['db_host']};dbname={$c->config['db_name']}", $c->config['db_user'], $c->config['db_pass']);
 };
+
 $controller = new Controller($container);
+
+spl_autoload_register( function($name) {
+    if (is_file(dirname(__FILE__) .'/app/Controllers/'.$name.'.php')) {
+        include(__DIR__ .'/app/Controllers/'.$name.'.php');
+    }
+});
 
 require_once 'app/routes/web.php';
 

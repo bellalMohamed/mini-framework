@@ -18,7 +18,7 @@ class View
 
 	public function getViewPath()
 	{
-		return "Views/{$this->view}.php";
+		return "Views/{$this->view}.view.php";
 	}
 
 	public function compileView()

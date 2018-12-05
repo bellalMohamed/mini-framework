@@ -64,9 +64,10 @@ class App
 	protected function process($callable)
 	{
 		$response = $this->container->response;
-		if (is_array($callable)) {
+		if (!is_callable($callable)) {
+			$callable = explode('@', $callable);
 			if (!is_object($callable[0])) {
-				$callable[0] = new $callable[0];
+				$callable[0] = new $callable[0]($this->container);
 			}
 			return call_user_func($callable, $response);
 		}

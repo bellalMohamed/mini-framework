@@ -22,7 +22,7 @@ class Controller {
 		return self::$db;		
 	}
 
-	public function view($view, $vars)
+	public function view($view, array $vars = [])
 	{
 		return self::$view->load($view, $vars);
 	}
