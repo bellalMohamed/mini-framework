@@ -5,5 +5,6 @@
 </head>
 <body>
 	Hey
+	<?php echo $name ?>
 </body>
 </html>

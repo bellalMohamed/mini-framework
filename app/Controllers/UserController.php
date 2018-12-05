@@ -2,22 +2,14 @@
 
 namespace App\Controllers;
 
-use PDO;
+use App\Controllers\Controller;
 
-class UserController
+class UserController extends Controller
 {
-	protected $db;
-
-	public function __construct(PDO $db)
+	public function index($response)
 	{
-		$this->db = $db;
-	}
-
-	public function index($response, $view)
-	{
-		// var_dump($view);
-		// die();
-		return $view->load('users');
-		// $useers = $this->db->query(SELECT * FROM )
+		return $this->view('users', [
+			'name' => 'Bellal'
+		]);
 	}
 }

@@ -2,7 +2,9 @@
 
 namespace App\Controllers;
 
-class HomeController
+use App\Controllers\Controller;
+
+class HomeController extends Controller
 {
 	public function index($response)
 	{

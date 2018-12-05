@@ -1,4 +1,6 @@
 <?php
+
+use App\Controllers\Controller;
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -27,16 +29,8 @@ $container['config'] = function () {
 $container['db'] = function ($c) {
 	return new PDO("{$c->config['db_driver']}:host={$c->config['db_host']};dbname={$c->config['db_name']}", $c->config['db_user'], $c->config['db_pass']);
 };
+$controller = new Controller($container);
 
-// $app->get('/', function () {
-// 	echo 'Home'; 
-// });
-
-// $app->post('/signin', function () {
-// 	echo 'Home'; 
-// });
-
-$app->get('/home', [App\Controllers\HomeController::class, 'index']);
-$app->get('/users', [new App\Controllers\UserController($container->db), 'index']);
+require_once 'app/routes/web.php';
 
 $app->run();

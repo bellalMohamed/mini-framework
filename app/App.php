@@ -64,14 +64,13 @@ class App
 	protected function process($callable)
 	{
 		$response = $this->container->response;
-		$view = $this->container->view;
 		if (is_array($callable)) {
 			if (!is_object($callable[0])) {
 				$callable[0] = new $callable[0];
 			}
-			return call_user_func($callable, $response, $view);
+			return call_user_func($callable, $response);
 		}
-		return $callable($response, $view);
+		return $callable($response);
 	}
 
 	protected function respond($response)
@@ -84,8 +83,8 @@ class App
 		));
 
 		if ($response instanceof View) {
-			require_once 'Views/'.$response->getViewPath();
-			
+			$response->compileView();
+			// require_once 'Views/'.$response->getViewPath();
 			return;
 		}
 
