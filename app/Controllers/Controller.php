@@ -6,10 +6,11 @@ use App\Container;
 use App\View;
 
 class Controller {
-	public static $db;
-	public static $response;
-	public static $view;
 	public static $container;
+	public static $db;
+	public static $view;
+	public static $response;
+	public static $session;
 
 	public function __construct(Container $container)
 	{
@@ -17,6 +18,7 @@ class Controller {
 		self::$db = $container->db;
 		self::$view = $container->view;
 		self::$response = $container->response;
+		self::$session = $container->session;
 	}
 
 	public static function getDB() 
@@ -32,5 +34,10 @@ class Controller {
 	public function response()
 	{
 		return self::$response;
+	}
+
+	public function session()
+	{
+		return self::$session;
 	}
 }

@@ -22,7 +22,10 @@ class App
 			},
 			'request' => function () {
 				return new Request;
-			}
+			},
+			'session' => function () {
+				return new Session;
+			},
 		]);
 	}
 
