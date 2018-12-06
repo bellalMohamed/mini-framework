@@ -6,6 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Spatie\\Blade\\' => array($vendorDir . '/spatie/laravel-blade/src'),
     'App\\' => array($baseDir . '/app'),
 );

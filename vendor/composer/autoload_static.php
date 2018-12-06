@@ -4,17 +4,9 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit0cb5d53991353c95416eb9052614aa4e
+class ComposerStaticInit4d7697495b9dc24292a87a81e6020d25
 {
-    public static $files = array (
-        '3b5531f8bb4716e1b6014ad7e734f545' => __DIR__ . '/..' . '/illuminate/support/Illuminate/Support/helpers.php',
-    );
-
     public static $prefixLengthsPsr4 = array (
-        'S' => 
-        array (
-            'Spatie\\Blade\\' => 13,
-        ),
         'A' => 
         array (
             'App\\' => 4,
@@ -22,55 +14,17 @@ class ComposerStaticInit0cb5d53991353c95416eb9052614aa4e
     );
 
     public static $prefixDirsPsr4 = array (
-        'Spatie\\Blade\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/spatie/laravel-blade/src',
-        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
     );
 
-    public static $prefixesPsr0 = array (
-        'S' => 
-        array (
-            'Symfony\\Component\\Finder\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/symfony/finder',
-            ),
-        ),
-        'I' => 
-        array (
-            'Illuminate\\View' => 
-            array (
-                0 => __DIR__ . '/..' . '/illuminate/view',
-            ),
-            'Illuminate\\Support' => 
-            array (
-                0 => __DIR__ . '/..' . '/illuminate/support',
-            ),
-            'Illuminate\\Filesystem' => 
-            array (
-                0 => __DIR__ . '/..' . '/illuminate/filesystem',
-            ),
-            'Illuminate\\Events' => 
-            array (
-                0 => __DIR__ . '/..' . '/illuminate/events',
-            ),
-            'Illuminate\\Container' => 
-            array (
-                0 => __DIR__ . '/..' . '/illuminate/container',
-            ),
-        ),
-    );
-
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit0cb5d53991353c95416eb9052614aa4e::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit0cb5d53991353c95416eb9052614aa4e::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit0cb5d53991353c95416eb9052614aa4e::$prefixesPsr0;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit4d7697495b9dc24292a87a81e6020d25::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit4d7697495b9dc24292a87a81e6020d25::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }

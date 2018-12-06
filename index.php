@@ -10,24 +10,25 @@ require 'vendor/autoload.php';
 $app = new App\App;
 $container = $app->getContainer();
 
-$container['errorHandler'] = function () {
-	return function ($response) {
-		return $response->setBody('Page Not Found')->withStatus('404');
+$container['errorHandler'] = function ($c) {
+	return function () use ($c) {
+		return $c->response->setBody('Page Not Found')->withStatus('404');
 	};
 };
 
 $container['config'] = function () {
 	return [
-		'db_driver' => 'mysql',
+		'db_driver' => 'sqlsrv',
 		'db_host' => 'localhost',
-		'db_name' => 'zeal',
-		'db_user' => 'phpmyadmin',
-		'db_pass' => 'root',
+		'db_name' => 'hospital',
+		'db_user' => 'sa',
+		'db_pass' => 'Root3Root',
 	];
 };
 
 $container['db'] = function ($c) {
-	return new PDO("{$c->config['db_driver']}:host={$c->config['db_host']};dbname={$c->config['db_name']}", $c->config['db_user'], $c->config['db_pass']);
+	// return new PDO("{$c->config['db_driver']}:host={$c->config['db_host']};dbname={$c->config['db_name']}", $c->config['db_user'], $c->config['db_pass']);
+	return new PDO("{$c->config['db_driver']}:Server={$c->config['db_host']};Database={$c->config['db_name']}", $c->config['db_user'], $c->config['db_pass']);
 };
 
 $controller = new Controller($container);

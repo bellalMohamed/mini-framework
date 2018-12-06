@@ -6,7 +6,7 @@ class Response
 {
 	protected $body;
 	protected $statusCode = 200;
-	protected $heads = [];
+	protected $headers = [];
 
 	public function setBody($body)
 	{
