@@ -10,7 +10,10 @@ class UserController extends Controller
 {
 	public function index(Request $request)
 	{
-		return $this->response()->json(Auth::guard('user')->user());
+		if (Auth::guard('user')->check()) {
+			$user = Auth::guard('user')->user();
+		}
+		return $this->response()->json($user);
 	}
 
 	public function UserLoginIndex()

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Container;
+use App\Exceptions\EmailAlreadyRegisteredException;
 use App\Exceptions\NoGuardException;
 use App\Hash;
 use App\Models\User;
@@ -28,6 +29,7 @@ class Auth
 	{
 		global $container;
 		$this->db = $container->db;
+		$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
 
 	public function attempt($email, $password)
@@ -36,8 +38,7 @@ class Auth
 			throw new NoGuardException("No Guard Provided");
 		}
 
-		if (!empty($email) && !empty($password)) {
-			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		if (!empty($email) || !empty($password)) {
 			$user = $this->getUserBy(['email' => $email]);
 
 			if ($user && $this->checkPassword($password, $user->password)) {
@@ -65,11 +66,43 @@ class Auth
 		if (self::$loginAttempt && self::$user) {
 			Session::set('login', true);
 			Session::set('id', $this->getGuard() . ':' . self::$user->id);
-			"id" => "doctors:2"
 			return true;
 		}
 
 		return false;
+	}
+
+	public function register($name, $email, $password)
+	{
+		if (!empty($name) || !empty($email) || !empty($password)) {
+			$user = $this->getUserBy(['email' => $email]);
+			if ($user) {
+				throw new EmailAlreadyRegisteredException("Email already registered");
+			}
+			if ($this->registerNewUser($name, $email, $password)) {
+				return true;
+			}
+			return false;
+		}
+
+		return false;
+	}
+
+	protected function registerNewUser($name, $email, $password)
+	{
+		$table = $this->extractTableFromGuard();
+		$hashedPassword = Hash::make($password);
+
+		$userQuery = $this->db->prepare("INSERT INTO $table (name, email, password) VALUES (?, ?, ?)");
+
+		$userQuery->execute([$name, $email, $hashedPassword]);
+
+		return true;
+	}
+
+	protected function extractTableFromGuard()
+	{
+		return $this->getGuard() . 's';
 	}
 
 	public function check()
@@ -113,7 +146,8 @@ class Auth
 		$value = array_values($params)[0];
 		$table = $this->getGuard() . 's';
 
-		$userQuery = $this->db->prepare("SELECT TOP 1 * FROM $table WHERE {$column} = ?");
+		// $userQuery = $this->db->prepare("SELECT TOP 1 * FROM $table WHERE {$column} = ?");
+		$userQuery = $this->db->prepare("SELECT * FROM $table WHERE {$column} = ?");
 		$userQuery->execute([$value]);
 		$user = $userQuery->fetchAll(PDO::FETCH_CLASS, User::class);
 		if (!empty($user)) {
@@ -121,7 +155,6 @@ class Auth
 		}
 		return null;
 	}
-
 
 	public static function guard($guard)
 	{

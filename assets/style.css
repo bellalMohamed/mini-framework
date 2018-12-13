@@ -1,0 +1,63 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+html {
+	position: absolute;
+}
+
+.left {
+	background: teal;
+	float: left;
+}
+
+.right {
+	background: tomato;
+	float: right;
+}
+
+.right, .left {
+	width: 50vw;
+	height: 100vh;
+	text-align: center;
+}
+
+.form-login, .form-register {
+	background: #40c6ff3b;
+	width: 400px;
+	height: 150px;
+	position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+}
+
+.form-login {
+    left: 25%;
+}
+
+.form-register {
+    left: 75%;
+    height: 200px;
+}
+
+.form-login input, .form-register input {
+	display: block;
+	width: 80%;
+	margin: auto;
+	margin-top: 15px;
+	font-size: 15px;
+}
+
+.form-login input {
+	padding: 7px;
+	border-radius: 5px;
+	border: none;
+}
+
+.form-register input {
+	padding: 7px;
+	border-radius: 5px;
+	border: none;
+}

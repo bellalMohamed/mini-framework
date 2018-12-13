@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\Controller;
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -20,16 +21,19 @@ $container['errorHandler'] = function ($c) {
 
 $container['config'] = function () {
 	return [
-		'db_driver' => 'sqlsrv',
+		// 'db_driver' => 'sqlsrv',
+		'db_driver' => 'mysql',
 		'db_host' => 'localhost',
 		'db_name' => 'hospital',
-		'db_user' => 'sa',
-		'db_pass' => 'Root3Root',
+		'db_user' => 'root',
+		'db_pass' => 'root',
 	];
 };
 
 $container['db'] = function ($c) {
-	return new PDO("{$c->config['db_driver']}:Server={$c->config['db_host']};Database={$c->config['db_name']}", $c->config['db_user'], $c->config['db_pass']);
+	// return new PDO("{$c->config['db_driver']}:Server={$c->config['db_host']};Database={$c->config['db_name']}", $c->config['db_user'], $c->config['db_pass']);
+
+	return new PDO("{$c->config['db_driver']}:host={$c->config['db_host']};dbname={$c->config['db_name']}", $c->config['db_user'], $c->config['db_pass']);
 };
 
 $controller = new Controller($container);

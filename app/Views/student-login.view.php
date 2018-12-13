@@ -6,6 +6,11 @@
 	<link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>
+	<?php
+		if (App\Session::exists('error')) {
+			echo App\Session::flash('error');
+		}
+	 ?>
 	<div class="left">
 		<h2>Login</h2>
 		<form class="form-login" method="POST" action="/student/login">

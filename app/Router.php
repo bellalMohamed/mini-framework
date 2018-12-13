@@ -15,13 +15,13 @@ class Router
 	public function setPath($path = '/')
 	{
 		$this->path = $path;
-	}	
+	}
 
 	public function addRouter($uri, $handler, array $methods = ['GET'])
 	{
 		$this->routes[$uri] = $handler;
 		$this->methods[$uri] = $methods;
-	}	
+	}
 
 	public function getResponse()
 	{
