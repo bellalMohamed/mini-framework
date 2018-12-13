@@ -7,8 +7,8 @@
 </head>
 <body>
 	<?php
-		if (App\Session::exists('error')) {
-			echo App\Session::flash('error');
+		if (App\Session::exists('message')) {
+			echo App\Session::flash('message');
 		}
 	 ?>
 	<div class="left">

@@ -30,7 +30,7 @@ class View
 	protected function includeWithVariables($filePath, $variables = array(), $print = true)
 	{
 		$realPath = dirname(__FILE__) .'/'. $filePath;
-	    
+
 	    $output = NULL;
 	    if(file_exists($realPath)){
 	        extract($variables);
@@ -39,7 +39,7 @@ class View
 	        $output = ob_get_clean();
 	        echo ($output);
 	    }
-	    
+
 	    return $this;
 	}
 

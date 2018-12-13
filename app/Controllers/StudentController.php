@@ -11,10 +11,10 @@ class StudentController extends Controller
 {
 	public function index(Request $request)
 	{
-		if (Auth::guard('user')->check()) {
-			$user = Auth::guard('user')->user();
+		if (Auth::guard('student')->check()) {
+			$student = Auth::guard('student')->user();
 		}
-		return $this->response()->json($user);
+		return $this->response()->json($student);
 	}
 
 	public function studentLoginIndex()
@@ -23,16 +23,17 @@ class StudentController extends Controller
 			return $this->redirect('/student/home');
 		}
 
-		return $this->view('student-login');
+		return $this->view('student-auth');
 	}
 
 	public function loginStudent(Request $request)
 	{
-		if (Auth::guard('user')->attempt($request->email, $request->password)) {
-			Auth::guard('user')->login();
-			return $this->redirect('/home');
+		if (Auth::guard('student')->attempt($request->email, $request->password)) {
+			Auth::guard('student')->login();
+			return $this->redirect('/student/home');
 		}
-		return $this->redirect('/login');
+		Session::flash('message', 'Wrong Credentials');
+		return $this->redirect('/student/login/index');
 	}
 
 	public function registerStudent(Request $request)
