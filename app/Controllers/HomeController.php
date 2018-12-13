@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Controllers;
-
+use App\Auth;
 use App\Controllers\Controller;
 
 class HomeController extends Controller
 {
-	public function index($response)
+	public function index()
 	{
-		return $response->setBody('Hey');
+		if (!Auth::guard('user')->check()) {
+			return $this->redirect('/login');
+		}
+
+		return $this->view('home');
 	}
 }

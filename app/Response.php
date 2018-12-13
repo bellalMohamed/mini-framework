@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App;
 
@@ -35,6 +35,12 @@ class Response
 		$this->withHeader('Content-Type', 'application/json');
 
 		$this->body = json_encode($body);
+		return $this;
+	}
+
+	public function redirect($url)
+	{
+		$this->withHeader('Location', $url);
 		return $this;
 	}
 

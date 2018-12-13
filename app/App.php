@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App;
 
@@ -55,7 +55,7 @@ class App
 		$router->setPath($_SERVER['PATH_INFO'] ?? '/');
 
 		try {
-			$response = $router->getResponse();		
+			$response = $router->getResponse();
 		} catch (RouteNotFoundException $e) {
 			if ($this->container->has('errorHandler')) {
 				$response = $this->container->errorHandler;
@@ -96,14 +96,14 @@ class App
 				$response->getStatusCode(),
 				''
 			));
-			
+
 			foreach ($response->getHeaders() as $header) {
-				header("{$header[0]}: {$header[0]}");
+				header("{$header[0]}: {$header[1]}");
 			}
 
 			echo $response->getBody();
 			return;
-		}		
+		}
 
 		echo $response;
 	}

@@ -1,25 +1,30 @@
 <?php
 
+use App\Auth;
 use App\Controllers\Controller;
 use App\Models\User;
 use App\Request;
+use App\Hash;
 
 class UserController extends Controller
 {
 	public function index(Request $request)
 	{
-		$result = $this->getDB()->query('SELECT * FROM users')->fetchAll(PDO::FETCH_CLASS, User::class);
-		// $this->getDB()->prepare("INSERT INTO users (name, email, password) VALUES (?,?,?)")->execute(['Bellal', 'mbellal2000@gmail.com', 'password']);
-		
-		return $this->response()->json($result);
+		return $this->response()->json(Auth::guard('user')->user());
 	}
 
-	public function loginIndex()
+	public function UserLoginIndex()
 	{
-		$users = $this->getDB()->query('SELECT * FROM users')->fetchAll(PDO::FETCH_CLASS, User::class);
+		return $this->view('user-login');
+	}
 
-		return $this->view('login', [
-			'users' => $users,
-		]);
+	public function loginUser(Request $request)
+	{
+		if (Auth::guard('user')->attempt($request->email, $request->password)) {
+			Auth::guard('user')->login();
+			return $this->redirect('/home');
+		}
+		return $this->redirect('/login');
+
 	}
 }

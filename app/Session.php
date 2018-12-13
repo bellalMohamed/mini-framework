@@ -4,31 +4,35 @@ namespace App;
 
 class Session
 {
-	public function set($name, $value){
+	public static function set($name, $value)
+	{
 		return $_SESSION[$name] = $value;
 	}
 
-	public function get($name){
-		return $_SESSION[$name];
+	public static function get($name){
+		if (isset($_SESSION[$name])) {
+			return $_SESSION[$name];
+		}
+		return null;
 	}
 
-	public function exists($name){
+	public static function exists($name){
 		return (isset($_SESSION[$name])) ? true : false;
 	}
-	
-	public function delete($name){
-		if ($this->exists($name)) {
+
+	public static function delete($name){
+		if (self::exists($name)) {
 			unset($_SESSION[$name]);
 		}
 	}
 
-	public function flash($name, $value = ''){
-		if ($this->exists($name)) {
-			$session = $this->get($name);
-			$this->delete($name);
+	public static function flash($name, $value = ''){
+		if (self::exists($name)) {
+			$session = self::get($name);
+			self::delete($name);
 			return $session;
 		}else{
-			$this->put($name, $value);
+			self::set($name, $value);
 		}
 	}
 }
