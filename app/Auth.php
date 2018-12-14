@@ -108,7 +108,9 @@ class Auth
 	public function check()
 	{
 		$loginSession = explode(':', Session::get('id'));
-
+		if ($loginSession[0] == '') {
+			return false;
+		}
 		return $this->attemptWithId($loginSession[1]);
 	}
 

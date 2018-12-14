@@ -21,7 +21,7 @@ class Controller {
 		self::$session = $container->session;
 	}
 
-	public static function getDB()
+	public static function db()
 	{
 		return self::$db;
 	}
@@ -39,6 +39,11 @@ class Controller {
 	public function redirect($url)
 	{
 		return self::$response->redirect($url);
+	}
+
+	public function back()
+	{
+		return self::$response->back();
 	}
 
 	public function session()

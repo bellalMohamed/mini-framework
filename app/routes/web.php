@@ -1,12 +1,30 @@
 <?php
 
 $app->get('/home', 'HomeController@index');
-$app->get('/users', 'UserController@index');
+
 
 $app->get('/student/login/index', 'StudentController@studentLoginIndex');
 $app->post('/student/login', 'StudentController@loginStudent');
 $app->post('/student/register', 'StudentController@registerStudent');
 
+
+
+
 $app->get('/teacher/login/index', 'TeacherController@teacherLoginIndex');
 $app->post('/teacher/login', 'TeacherController@loginTeacher');
 $app->post('/teacher/register', 'TeacherController@registerTeacher');
+
+
+
+
+$app->get('/admin/login/index', 'AdminController@adminLoginIndex');
+$app->post('/admin/login', 'AdminController@loginAdmin');
+$app->get('/admin/home', 'AdminController@index');
+$app->post('/admin/librarian/new', 'AdminController@registerNewLibrarian');
+$app->get('/admin/librarian/delete', 'AdminController@deleteLibrarian');
+
+
+
+$app->get('/librarian/login/index', 'LibrarianController@librarianLoginIndex');
+$app->post('/librarian/login', 'LibrarianController@loginLibrarian');
+$app->get('/librarian/home', 'LibrarianController@index');

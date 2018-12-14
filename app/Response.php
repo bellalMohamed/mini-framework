@@ -44,6 +44,12 @@ class Response
 		return $this;
 	}
 
+	public function back()
+	{
+		$this->withHeader('Location', $_SERVER['HTTP_REFERER']);
+		return $this;
+	}
+
 	public function withHeader($name, $value)
 	{
 		$this->headers[] = [$name, $value];
