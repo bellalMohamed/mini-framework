@@ -19,9 +19,13 @@ $app->post('/teacher/register', 'TeacherController@registerTeacher');
 
 $app->get('/admin/login/index', 'AdminController@adminLoginIndex');
 $app->post('/admin/login', 'AdminController@loginAdmin');
-$app->get('/admin/home', 'AdminController@index');
+$app->get('/admin/librarians', 'AdminController@librarianIndex');
 $app->post('/admin/librarian/new', 'AdminController@registerNewLibrarian');
 $app->get('/admin/librarian/delete', 'AdminController@deleteLibrarian');
+
+
+$app->get('/admin/books', 'AdminController@booksIndex');
+$app->post('/admin/book/new', 'AdminController@newBook');
 
 
 

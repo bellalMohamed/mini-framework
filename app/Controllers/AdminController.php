@@ -3,6 +3,7 @@
 use App\Auth;
 use App\Controllers\Controller;
 use App\Hash;
+use App\Models\Book;
 use App\Models\Librarian;
 use App\Request;
 use App\Session;
@@ -21,6 +22,58 @@ class AdminController extends Controller
 		return $this->view('admin-home', [
 			'librarians' => $librarians
 		]);
+	}
+
+	public function librarianIndex(Request $request)
+	{
+		$this->guardAgainstNonAdmins();
+
+		$librarians = $this->getLibrarians();
+
+		$admin = Auth::guard('admin')->user();
+		return $this->view('admin-librarian', [
+			'librarians' => $librarians
+		]);
+	}
+
+	public function BooksIndex(Request $request)
+	{
+		$this->guardAgainstNonAdmins();
+
+		$books = $this->getBooks();
+
+		return $this->view('admin-books', [
+			'books' => $books
+		]);
+	}
+
+	protected function getBooks()
+	{
+		$booksQuery = $this->db()->query("SELECT * FROM books");
+
+		$books = $booksQuery->fetchAll(PDO::FETCH_CLASS, Book::class);
+
+		return $books;
+	}
+
+	public function newBook(Request $request)
+	{
+		if (!$request->name || !$request->copies || !$request->author) {
+			Session::flash('error', 'Please Fill All Data');
+			return $this->back();
+		}
+
+		$this->insertNewBook($request) ? Session::flash('success', 'Book added successfully') : Session::flash('error', 'Error Adding Book');
+
+		return $this->back();
+	}
+
+	protected function insertNewBook(Request $request)
+	{
+		$userQuery = $this->db()->prepare("INSERT INTO books (name, author, copies, book_id) VALUES (?, ?, ?, ?)");
+
+		var_dump($userQuery->execute([$request->name, $request->author, $request->copies, uniqid()]));
+		return true;
 	}
 
 	public function AdminLoginIndex()

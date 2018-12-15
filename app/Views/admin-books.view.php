@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Pricing example for Bootstrap</title>
+    <title>Admin</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -22,10 +21,8 @@
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
         <h5 class="my-0 mr-md-auto font-weight-normal">Admin Dashboard</h5>
         <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="#">Add Librarian</a>
-
-            <a class="p-2 text-dark" href="#">Add Book</a>
-            <a class="p-2 text-dark" href="#">List Books</a>
+            <a class="p-2 text-dark" href="/admin/librarians">Librarian</a>
+            <a class="p-2 text-dark" href="/admin/books">Books</a>
         </nav>
         <a class="btn btn-outline-primary" href="#">Logout</a>
     </div>
@@ -53,19 +50,19 @@
                     Add Librarian
                 </div>
                 <div class="card-body">
-                    <form action="/admin/librarian/new" method="POST">
+                    <form action="/admin/book/new" method="POST">
                         <div class="form-group">
-                            <label for="lib-name">Name</label>
-                            <input type="text" name="name" class="form-control" id="lib-name" placeholder="Name">
+                            <label for="book-name">Name</label>
+                            <input type="text" name="name" class="form-control" id="book-name" placeholder="Name">
                         </div>
                         <div class="form-group">
-                            <label for="lib-email">Email address</label>
-                            <input type="email" name="email" class="form-control" id="lib-email" placeholder="Enter email">
+                            <label for="book-author">Author</label>
+                            <input type="text" name="author" class="form-control" id="book-author" placeholder="Author name">
 
                         </div>
                         <div class="form-group">
-                            <label for="lib-password">Password</label>
-                            <input type="password" name="password" class="form-control" id="lib-password" placeholder="Password">
+                            <label for="book-copies">Copies</label>
+                            <input type="copies" name="copies" class="form-control" id="book-copies" placeholder="Copies">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -82,22 +79,20 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Nama</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Delete</th>
+                                <th scope="col">Author</th>
+                                <th scope="col">Copies</th>
+                                <th scope="col">Book ID</th>
                             </tr>
                         </thead>
                         <tbody>
-                        	<?php foreach ($librarians as $index => $librarian) {
+                        	<?php foreach ($books as $index => $book) {
                         		?>
                         		<tr>
 	                                <th><?php echo $index + 1 ?></th>
-	                                <td><?php echo $librarian->name ?></td>
-	                                <td><?php echo $librarian->email ?></td>
-	                                <td>
-	                                	<a href="/admin/librarian/delete?id=<?php echo $librarian->id ?>" class="btn btn-danger">
-	                                		Delete
-	                                	</a>
-                                	</td>
+	                                <td><?php echo $book->name ?></td>
+                                    <td><?php echo $book->author ?></td>
+                                    <td><?php echo $book->copies ?></td>
+	                                <td><?php echo $book->book_id ?></td>
 	                            </tr>
 
                         	<?php } ?>
