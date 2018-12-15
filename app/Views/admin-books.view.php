@@ -23,6 +23,7 @@
         <nav class="my-2 my-md-0 mr-md-3">
             <a class="p-2 text-dark" href="/admin/librarians">Librarian</a>
             <a class="p-2 text-dark" href="/admin/books">Books</a>
+            <a class="p-2 text-dark" href="/admin/users">Users</a>
         </nav>
         <a class="btn btn-outline-primary" href="#">Logout</a>
     </div>

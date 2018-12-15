@@ -5,6 +5,8 @@ use App\Controllers\Controller;
 use App\Hash;
 use App\Models\Book;
 use App\Models\Librarian;
+use App\Models\Student;
+use App\Models\Teacher;
 use App\Request;
 use App\Session;
 
@@ -34,6 +36,46 @@ class AdminController extends Controller
 		return $this->view('admin-librarian', [
 			'librarians' => $librarians
 		]);
+	}
+
+	public function userIndex()
+	{
+		$this->guardAgainstNonAdmins();
+
+		$students = $this->getStudents();
+		$teachers = $this->getTeachers();
+
+		return $this->view('admin-users', [
+			'students' => $students,
+			'teachers' => $teachers,
+		]);
+	}
+
+	public function updateUserLimit(Request $request)
+	{
+		$limitQuery = $this->db()->prepare("UPDATE $request->role SET books = ? WHERE id = ?");
+		$limitQuery->execute([$request->limit, $request->id]);
+
+		Session::flash('success', 'Limit Updated');
+		return $this->back();
+	}
+
+	protected function getStudents()
+	{
+		$studentsQuery = $this->db()->query("SELECT * FROM students");
+
+		$students = $studentsQuery->fetchAll(PDO::FETCH_CLASS, Student::class);
+
+		return $students;
+	}
+
+	protected function getTeachers()
+	{
+		$teachersQuery = $this->db()->query("SELECT * FROM teachers");
+
+		$teachers = $teachersQuery->fetchAll(PDO::FETCH_CLASS, Teacher::class);
+
+		return $teachers;
 	}
 
 	public function BooksIndex(Request $request)
@@ -85,7 +127,7 @@ class AdminController extends Controller
 	{
 		if (Auth::guard('admin')->attempt($request->email, $request->password)) {
 			Auth::guard('admin')->login();
-			return $this->redirect('/admin/home');
+			return $this->redirect('/admin/librarians');
 		}
 		Session::flash('message', 'Wrong Credentials');
 		return $this->redirect('/admin/login/index');

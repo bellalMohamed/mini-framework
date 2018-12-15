@@ -24,7 +24,6 @@
             <a class="p-2 text-dark" href="/admin/librarians">Librarian</a>
             <a class="p-2 text-dark" href="/admin/books">Books</a>
             <a class="p-2 text-dark" href="/admin/users">Users</a>
-
         </nav>
         <a class="btn btn-outline-primary" href="#">Logout</a>
     </div>
@@ -47,59 +46,69 @@
     <div class="container-fluid">
 
         <div class="row">
-            <div class="card col-md-4 col-sm-12">
+            <div class="card col-md-12">
                 <div class="card-header">
-                    Add Librarian
-                </div>
-                <div class="card-body">
-                    <form action="/admin/librarian/new" method="POST">
-                        <div class="form-group">
-                            <label for="lib-name">Name</label>
-                            <input type="text" name="name" class="form-control" id="lib-name" placeholder="Name">
-                        </div>
-                        <div class="form-group">
-                            <label for="lib-email">Email address</label>
-                            <input type="email" name="email" class="form-control" id="lib-email" placeholder="Enter email">
-
-                        </div>
-                        <div class="form-group">
-                            <label for="lib-password">Password</label>
-                            <input type="password" name="password" class="form-control" id="lib-password" placeholder="Password">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-
-                </div>
-            </div>
-            <div class="card col-md-8">
-                <div class="card-header">
-                    All Librarian
+                    teachers
                 </div>
                 <div class="card-body">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Nama</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Delete</th>
+                                <th scope="col">Books Left</th>
+                                <th scope="col">Update Limit</th>
                             </tr>
                         </thead>
                         <tbody>
-                        	<?php foreach ($librarians as $index => $librarian) {
+                        	<?php foreach ($students as $index => $student) {
                         		?>
                         		<tr>
 	                                <th><?php echo $index + 1 ?></th>
-	                                <td><?php echo $librarian->name ?></td>
-	                                <td><?php echo $librarian->email ?></td>
-	                                <td>
-	                                	<a href="/admin/librarian/delete?id=<?php echo $librarian->id ?>" class="btn btn-danger">
-	                                		Delete
-	                                	</a>
-                                	</td>
+	                                <td><?php echo $student->name ?></td>
+                                    <td><?php echo $student->email ?></td>
+	                                <td><?php echo ($student->books == null) ? 'No Limit, yet' : $student->books ?></td>
+                                    <td><button class="btn btn-primary" onclick="var limit = prompt('Enter New Limit',''); document.location = '/admin/users/limit?id=<?php echo $student->id ?>&role=students&limit=' + limit">Update Limit</button></td>
 	                            </tr>
 
                         	<?php } ?>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="card col-md-12">
+                <div class="card-header">
+                    Teachers
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Books Left</th>
+                                <th scope="col">Update Limit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($teachers as $index => $teacher) {
+                                ?>
+                                <tr>
+                                    <th><?php echo $index + 1 ?></th>
+                                    <td><?php echo $teacher->name ?></td>
+                                    <td><?php echo $teacher->email ?></td>
+                                    <td><?php echo ($teacher->books == null) ? 'No Limit, yet' : $teacher->books ?></td>
+                                    <td><button class="btn btn-primary" onclick="var limit = prompt('Enter New Limit',''); document.location = '/admin/users/limit?id=<?php echo $teacher->id ?>&role=teachers&limit=' + limit">Update Limit</button></td>
+                                </tr>
+
+                            <?php } ?>
 
                         </tbody>
                     </table>

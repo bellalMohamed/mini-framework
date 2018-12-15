@@ -27,6 +27,9 @@ $app->get('/admin/librarian/delete', 'AdminController@deleteLibrarian');
 $app->get('/admin/books', 'AdminController@booksIndex');
 $app->post('/admin/book/new', 'AdminController@newBook');
 
+$app->get('/admin/users', 'AdminController@userIndex');
+$app->get('/admin/users/limit', 'AdminController@updateUserLimit');
+
 
 
 $app->get('/librarian/login/index', 'LibrarianController@librarianLoginIndex');
