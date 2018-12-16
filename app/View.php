@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Exceptions\ViewDoesntExist;
+
 class View
 {
 	protected $statusCode = 200;
@@ -38,6 +40,9 @@ class View
 	        include $realPath;
 	        $output = ob_get_clean();
 	        echo ($output);
+	    } else {
+	    	throw new ViewDoesntExist("View Doesn't Exist", 1);
+
 	    }
 
 	    return $this;

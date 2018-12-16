@@ -34,4 +34,7 @@ $app->get('/admin/users/limit', 'AdminController@updateUserLimit');
 
 $app->get('/librarian/login/index', 'LibrarianController@librarianLoginIndex');
 $app->post('/librarian/login', 'LibrarianController@loginLibrarian');
-$app->get('/librarian/home', 'LibrarianController@index');
+$app->get('/librarian/books', 'LibrarianController@librarianGiveBooks');
+
+
+
