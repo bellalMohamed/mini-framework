@@ -88,6 +88,7 @@
                                 <th scope="col">Nama</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Return Date</th>
+                                <th scope="col">Return Book</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -98,6 +99,7 @@
                                     <td><?php echo $book->name ?></td>
                                     <td><?php echo $book->book_id ?></td>
                                     <td><?php echo $book->return_date ?></td>
+                                    <td><a class="btn btn-success   " href="/librarian/book/return?type=student&book_id=<?php echo $book->id ?>">Return Book</a></td>
                                 </tr>
                             <?php } ?>
 

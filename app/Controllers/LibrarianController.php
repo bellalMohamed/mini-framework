@@ -101,7 +101,7 @@ class LibrarianController extends Controller
 		$this->db()->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		$borrowerQuery = $this->db()->query("
-			SELECT books.id, books.name, books.id, books.copies, books_borrowed.book_id, COUNT(books_borrowed.book_id) AS borrows FROM books
+			SELECT books.id, books.name, books.copies, books_borrowed.book_id, COUNT(books_borrowed.book_id) AS borrows FROM books
 			LEFT JOIN books_borrowed ON books.id = books_borrowed.book_id
 			GROUP BY books.id
 			having books.copies > COUNT(books_borrowed.book_id)
@@ -203,5 +203,19 @@ class LibrarianController extends Controller
 			return $this->redirect('/librarian/login/index');
 
 		}
+	}
+
+	public function returnBook(Request $request)
+	{
+		$userQuery = $this->db()->prepare("
+			DELETE FROM books_borrowed
+			WHERE book_id = ? AND user_type = ?
+		");
+
+		$userQuery->execute([$request->book_id, $request->type]);
+
+		Session::flash('success', 'Book Added To Shelf Again');
+		return $this->back();
+
 	}
 }

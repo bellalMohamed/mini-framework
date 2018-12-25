@@ -43,6 +43,7 @@ $app->post('/librarian/login', 'LibrarianController@loginLibrarian');
 $app->get('/librarian/books', 'LibrarianController@librarianGiveBooks');
 $app->get('/librarian/give', 'LibrarianController@giveBookIndex');
 $app->post('/librarian/give/book', 'LibrarianController@giveBook');
+$app->get('/librarian/book/return', 'LibrarianController@returnBook');
 
 
 

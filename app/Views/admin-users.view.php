@@ -59,7 +59,7 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Books Left</th>
                                 <th scope="col">Update Limit</th>
-                                <th scope="col">Give Book</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -71,8 +71,6 @@
                                     <td><?php echo $student->email ?></td>
 	                                <td><?php echo ($student->books == null) ? 'No Limit, yet' : $student->books ?></td>
                                     <td><button class="btn btn-primary" onclick="var limit = prompt('Enter New Limit',''); document.location = '/admin/users/limit?id=<?php echo $student->id ?>&role=students&limit=' + limit">Update Limit</button></td>
-
-                                    <td><a href="/admin/users/give/student?id=<?php echo $student->id ?>">Give Book</button></td>
 	                            </tr>
 
                         	<?php } ?>

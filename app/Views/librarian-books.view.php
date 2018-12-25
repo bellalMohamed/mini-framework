@@ -48,7 +48,7 @@
         <div class="row">
             <div class="card col-md-12">
                 <div class="card-header">
-                    teachers
+                    Students
                 </div>
                 <div class="card-body">
                     <table class="table">
