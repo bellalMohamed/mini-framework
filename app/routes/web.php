@@ -7,6 +7,7 @@ $app->get('/', 'HomeController@index');
 $app->get('/student/login/index', 'StudentController@studentLoginIndex');
 $app->post('/student/login', 'StudentController@loginStudent');
 $app->post('/student/register', 'StudentController@registerStudent');
+$app->get('/student/home', 'StudentController@index');
 
 
 

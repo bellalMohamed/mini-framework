@@ -3,6 +3,7 @@
 use App\Auth;
 use App\Controllers\Controller;
 use App\Hash;
+use App\Models\BookBorrowed;
 use App\Models\User;
 use App\Request;
 use App\Session;
@@ -14,7 +15,23 @@ class StudentController extends Controller
 		if (Auth::guard('student')->check()) {
 			$student = Auth::guard('student')->user();
 		}
-		return $this->response()->json($student);
+		$books = $this->getStudentBook();
+
+		return $this->view('student-home', [
+			'books' => $books,
+		]);
+	}
+
+	protected function getStudentBook()
+	{
+		$borrowerQuery = $this->db()->query("
+			SELECT *, books.id FROM books_borrowed
+			LEFT JOIN books ON books.id = books_borrowed.book_id
+		");
+
+		$books = $borrowerQuery->fetchAll(PDO::FETCH_CLASS, BookBorrowed::class);
+
+		return $books;
 	}
 
 	public function studentLoginIndex()
