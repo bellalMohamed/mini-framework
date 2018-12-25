@@ -58,12 +58,42 @@ class LibrarianController extends Controller
 
 	public function giveBook(Request $request)
 	{
+		$noOfBorrowedBooks = $this->getNOBorrowedBooks($request);
+		$userBooksLimit = $this->getUserBooksLimit($request);
+		if ($noOfBorrowedBooks  >= $userBooksLimit) {
+			Session::flash('error', 'User Exceeded Books Limit');
+			return $this->back();
+		}
+
 		$giveQuery = $this->db()->prepare("INSERT INTO books_borrowed (book_id, user_id, user_type, return_date) VALUES (?, ?, ?, ?)");
 
 		$giveQuery->execute([$request->book_id, $request->id, $request->type, $request->date]);
 
 		Session::flash('success', 'Book Given Successfully');
 		return $this->back();
+	}
+
+	protected function getNOBorrowedBooks(Request $request)
+	{
+		$noOfBorrowedBooksQuery = $this->db()->prepare("SELECT COUNT(user_id) AS total FROM books_borrowed WHERE user_id = ? AND user_type = ?");
+
+		$noOfBorrowedBooksQuery->execute([$request->id, $request->type]);
+
+		$noOfBorrowedBooks = $noOfBorrowedBooksQuery->fetchAll(PDO::FETCH_CLASS, BookBorrowed::class);
+
+		return $noOfBorrowedBooks[0]->total;
+	}
+
+	protected function getUserBooksLimit(Request $request)
+	{
+		$table = $request->type . 's';
+
+		$limitQuery = $this->db()->prepare("SELECT books FROM {$table} WHERE id = ?");
+
+		$limitQuery->execute([$request->id]);
+
+		$limit = $limitQuery->fetchAll(PDO::FETCH_CLASS, BookBorrowed::class);
+		return $limit[0]->books;
 	}
 
 	protected function getAvailableBooks()
