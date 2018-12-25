@@ -25,6 +25,9 @@ $app->get('/admin/librarians', 'AdminController@librarianIndex');
 $app->post('/admin/librarian/new', 'AdminController@registerNewLibrarian');
 $app->get('/admin/librarian/delete', 'AdminController@deleteLibrarian');
 
+$app->get('/admin/users/give/student', 'AdminController@giveBookToStudentIndex');
+$app->get('/admin/users/give/teacher', 'AdminController@giveBookToStudentIndex');
+
 
 $app->get('/admin/books', 'AdminController@booksIndex');
 $app->post('/admin/book/new', 'AdminController@newBook');
@@ -37,6 +40,8 @@ $app->get('/admin/users/limit', 'AdminController@updateUserLimit');
 $app->get('/librarian/login/index', 'LibrarianController@librarianLoginIndex');
 $app->post('/librarian/login', 'LibrarianController@loginLibrarian');
 $app->get('/librarian/books', 'LibrarianController@librarianGiveBooks');
+$app->get('/librarian/give', 'LibrarianController@giveBookIndex');
+$app->post('/librarian/give/book', 'LibrarianController@giveBook');
 
 
 

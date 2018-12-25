@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin</title>
+    <title>Teacher</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -19,7 +19,7 @@
 <body>
 
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <h5 class="my-0 mr-md-auto font-weight-normal">Admin Dashboard</h5>
+        <h5 class="my-0 mr-md-auto font-weight-normal">Teacher Dashboard</h5>
         <nav class="my-2 my-md-0 mr-md-3">
             <a class="p-2 text-dark" href="/admin/librarians">Librarian</a>
             <a class="p-2 text-dark" href="/admin/books">Books</a>
@@ -56,20 +56,16 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Books Left</th>
-                                <th scope="col">Update Limit</th>
+                                <th scope="col">Author</th>
                             </tr>
                         </thead>
                         <tbody>
-                        	<?php foreach ($students as $index => $student) {
+                        	<?php foreach ($books as $index => $book) {
                         		?>
                         		<tr>
 	                                <th><?php echo $index + 1 ?></th>
-	                                <td><?php echo $student->name ?></td>
-                                    <td><?php echo $student->email ?></td>
-	                                <td><?php echo ($student->books == null) ? 'No Limit, yet' : $student->books ?></td>
-                                    <td><button class="btn btn-primary" onclick="var limit = prompt('Enter New Limit',''); document.location = '/admin/users/limit?id=<?php echo $student->id ?>&role=students&limit=' + limit">Update Limit</button></td>
+	                                <td><?php echo $book->name ?></td>
+	                                <td><?php echo $book->author ?></td>
 	                            </tr>
 
                         	<?php } ?>
@@ -81,41 +77,6 @@
             </div>
         </div>
         <br><br>
-        <div class="row">
-            <div class="card col-md-12">
-                <div class="card-header">
-                    Teachers
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Books Left</th>
-                                <th scope="col">Update Limit</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($teachers as $index => $teacher) {
-                                ?>
-                                <tr>
-                                    <th><?php echo $index + 1 ?></th>
-                                    <td><?php echo $teacher->name ?></td>
-                                    <td><?php echo $teacher->email ?></td>
-                                    <td><?php echo ($teacher->books == null) ? 'No Limit, yet' : $teacher->books ?></td>
-                                    <td><button class="btn btn-primary" onclick="var limit = prompt('Enter New Limit',''); document.location = '/admin/users/limit?id=<?php echo $teacher->id ?>&role=teachers&limit=' + limit">Update Limit</button></td>
-                                </tr>
-
-                            <?php } ?>
-
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-        </div>
     </div>
 
 

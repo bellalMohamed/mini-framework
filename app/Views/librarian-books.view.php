@@ -58,7 +58,6 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Books Left</th>
-                                <th scope="col">Borrowed Books</th>
                                 <th scope="col">Give Book</th>
                             </tr>
                         </thead>
@@ -70,16 +69,8 @@
 	                                <td><?php echo $student->name ?></td>
                                     <td><?php echo $student->email ?></td>
 	                                <td><?php echo ($student->books == null) ? 'No Limit, yet' : $student->books ?></td>
-                                    <td><a href="/librarians/user/books?user=<?php echo $student->id ?>">Show</a></td>
-                                    <td>
-                                        <select name="" id="">
-                                            <?php
-                                                foreach ($books as $book) {
-                                                    echo "<option value='{$book->id}'>{$book->name} | Left: ". ($book->copies - $book->borrows) ."</option>";
-                                                }
-                                            ?>
-                                        </select>
-                                    </td>
+
+                                    <td><a href="/librarian/give?type=student&id=<?php echo $student->id ?>">Give Book</a></td>
 	                            </tr>
 
                         	<?php } ?>
@@ -114,8 +105,8 @@
                                     <th><?php echo $index + 1 ?></th>
                                     <td><?php echo $teacher->name ?></td>
                                     <td><?php echo $teacher->email ?></td>
-                                    <td><?php echo ($teacher->books == null) ? 'No Limit, yet' : $teacher->books ?></td>
-                                    <td><button class="btn btn-primary" onclick="var limit = prompt('Enter New Limit',''); document.location = '/admin/users/limit?id=<?php echo $teacher->id ?>&role=teachers&limit=' + limit">Update Limit</button></td>
+                                    <td><?php echo $teacher->books ?></td>
+                                    <th><a href="/librarian/give?type=teacher&id=<?php echo $teacher->id ?>">Give Book</a></th>
                                 </tr>
 
                             <?php } ?>

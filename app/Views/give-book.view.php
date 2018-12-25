@@ -46,71 +46,59 @@
     <div class="container-fluid">
 
         <div class="row">
-            <div class="card col-md-12">
+            <div class="card col-md-4 col-sm-12">
                 <div class="card-header">
-                    teachers
+                    Add Librarian
                 </div>
                 <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Books Left</th>
-                                <th scope="col">Update Limit</th>
-                                <th scope="col">Give Book</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        	<?php foreach ($students as $index => $student) {
-                        		?>
-                        		<tr>
-	                                <th><?php echo $index + 1 ?></th>
-	                                <td><?php echo $student->name ?></td>
-                                    <td><?php echo $student->email ?></td>
-	                                <td><?php echo ($student->books == null) ? 'No Limit, yet' : $student->books ?></td>
-                                    <td><button class="btn btn-primary" onclick="var limit = prompt('Enter New Limit',''); document.location = '/admin/users/limit?id=<?php echo $student->id ?>&role=students&limit=' + limit">Update Limit</button></td>
+                    <form action="/librarian/give/book" method="POST">
+                        <div class="form-group">
+                            <label for="book-author">Book</label>
+                            <select name="book_id" id="" onchange="giveBook(this)">
+                                <?php
+                                    foreach ($books as $book) {
+                                        echo "<option value='{$book->id}'>{$book->name} | Left: ". ($book->copies - $book->borrows) ."</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <input type="hidden" name="id" value="<?php echo $id ?>">
+                        <input type="hidden" name="type" value="<?php echo $type ?>">
 
-                                    <td><a href="/admin/users/give/student?id=<?php echo $student->id ?>">Give Book</button></td>
-	                            </tr>
+                        <div class="form-group">
+                            <label for="book-author">Book</label>
+                            <input type="date" name="date">
+                        </div>
 
-                        	<?php } ?>
-
-                        </tbody>
-                    </table>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
 
                 </div>
             </div>
-        </div>
-        <br><br>
-        <div class="row">
-            <div class="card col-md-12">
+
+            <div class="card col-md-8">
                 <div class="card-header">
-                    Teachers
+                    All Librarian
                 </div>
                 <div class="card-body">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Name</th>
+                                <th scope="col">Nama</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Books Left</th>
-                                <th scope="col">Update Limit</th>
+                                <th scope="col">Return Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($teachers as $index => $teacher) {
+                            <?php foreach ($userBooks as $index => $book) {
                                 ?>
                                 <tr>
                                     <th><?php echo $index + 1 ?></th>
-                                    <td><?php echo $teacher->name ?></td>
-                                    <td><?php echo $teacher->email ?></td>
-                                    <td><?php echo ($teacher->books == null) ? 'No Limit, yet' : $teacher->books ?></td>
-                                    <td><button class="btn btn-primary" onclick="var limit = prompt('Enter New Limit',''); document.location = '/admin/users/limit?id=<?php echo $teacher->id ?>&role=teachers&limit=' + limit">Update Limit</button></td>
+                                    <td><?php echo $book->name ?></td>
+                                    <td><?php echo $book->book_id ?></td>
+                                    <td><?php echo $book->return_date ?></td>
                                 </tr>
-
                             <?php } ?>
 
                         </tbody>

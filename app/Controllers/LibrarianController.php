@@ -30,6 +30,42 @@ class LibrarianController extends Controller
 		]);
 	}
 
+	public function giveBookIndex(Request $request)
+	{
+		$books = $this->getAvailableBooks();
+		$userBook = $this->getUserBook($request);
+
+		return $this->view('give-book', [
+			'id' => $request->id,
+			'type' => $request->type,
+			'books' => $books,
+			'userBooks' => $userBook,
+		]);
+	}
+
+	protected function getUserBook(Request $request)
+	{
+		$booksQuery = $this->db()->prepare("
+			SELECT * FROM books_borrowed
+			LEFT JOIN books ON books.id = books_borrowed.book_id
+			WHERE books_borrowed.user_type = ? AND books_borrowed.user_id = ?
+		");
+
+		$booksQuery->execute([$request->type, $request->id]);
+		$books = $booksQuery->fetchAll(PDO::FETCH_CLASS, BookBorrowed::class);
+		return $books;
+	}
+
+	public function giveBook(Request $request)
+	{
+		$giveQuery = $this->db()->prepare("INSERT INTO books_borrowed (book_id, user_id, user_type, return_date) VALUES (?, ?, ?, ?)");
+
+		$giveQuery->execute([$request->book_id, $request->id, $request->type, $request->date]);
+
+		Session::flash('success', 'Book Given Successfully');
+		return $this->back();
+	}
+
 	protected function getAvailableBooks()
 	{
 		$this->db()->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -104,7 +140,7 @@ class LibrarianController extends Controller
 	public function librarianLoginIndex()
 	{
 		if (Auth::guard('librarian')->check()) {
-			return $this->redirect('/librarian/home');
+			return $this->redirect('/librarian/books');
 		}
 
 		return $this->view('librarian-auth');
@@ -114,7 +150,7 @@ class LibrarianController extends Controller
 	{
 		if (Auth::guard('librarian')->attempt($request->email, $request->password)) {
 			Auth::guard('librarian')->login();
-			return $this->redirect('/librarian/home');
+			return $this->redirect('/librarian/books');
 		}
 
 		Session::flash('message', 'Wrong Credentials');
@@ -129,7 +165,7 @@ class LibrarianController extends Controller
 
 			if (Auth::guard('librarian')->attempt($request->email, $request->password)) {
 				Auth::guard('librarian')->login();
-				return $this->redirect('/librarian/home');
+				return $this->redirect('/librarian/books');
 			}
 
 		} catch (Exception $e) {

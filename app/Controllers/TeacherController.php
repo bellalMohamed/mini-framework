@@ -47,7 +47,7 @@ class TeacherController extends Controller
 		}
 
 		$teacherBooks = $this->getTeacherBooks();
-		// return $this->response()->json($teacherBooks);
+
 		return $this->view('teacher-home', [
 			'books' => $teacherBooks,
 		]);
