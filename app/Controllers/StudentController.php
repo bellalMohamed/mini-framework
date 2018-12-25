@@ -15,18 +15,19 @@ class StudentController extends Controller
 		if (Auth::guard('student')->check()) {
 			$student = Auth::guard('student')->user();
 		}
-		$books = $this->getStudentBook();
+		$books = $this->getStudentBooks();
 
 		return $this->view('student-home', [
 			'books' => $books,
 		]);
 	}
 
-	protected function getStudentBook()
+	protected function getStudentBooks()
 	{
 		$borrowerQuery = $this->db()->query("
 			SELECT *, books.id FROM books_borrowed
 			LEFT JOIN books ON books.id = books_borrowed.book_id
+			WHERE user_type = 'student';
 		");
 
 		$books = $borrowerQuery->fetchAll(PDO::FETCH_CLASS, BookBorrowed::class);

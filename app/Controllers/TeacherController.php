@@ -4,6 +4,7 @@ use App\Auth;
 use App\Controllers\Controller;
 use App\Hash;
 use App\Models\Book;
+use App\Models\BookBorrowed;
 use App\Models\Teacher;
 use App\Request;
 use App\Session;
@@ -12,10 +13,27 @@ class TeacherController extends Controller
 {
 	public function index(Request $request)
 	{
-		if (Auth::guard('teacher')->check()) {
-			$teacher = Auth::guard('teacher')->user();
+		if (!Auth::guard('teacher')->check()) {
+			return $this->redirect('/teacher/login/index');
 		}
-		return $this->response()->json($teacher);
+		$books = $this->getTeacherBooks();
+
+		return $this->view('teacher-home', [
+			'books' => $books,
+		]);
+	}
+
+	protected function getTeacherBooks()
+	{
+		$borrowerQuery = $this->db()->query("
+			SELECT *, books.id FROM books_borrowed
+			LEFT JOIN books ON books.id = books_borrowed.book_id
+			WHERE user_type = 'teacher';
+		");
+
+		$books = $borrowerQuery->fetchAll(PDO::FETCH_CLASS, BookBorrowed::class);
+
+		return $books;
 	}
 
 	public function teacherLoginIndex()
@@ -37,32 +55,6 @@ class TeacherController extends Controller
 		Session::flash('message', 'Wrong Credentials');
 
 		return $this->redirect('/teacher/login/index');
-	}
-
-
-	public function teacherHome()
-	{
-		if (!Auth::guard('teacher')->check()) {
-			return $this->redirect('/teacher/login/index');
-		}
-
-		$teacherBooks = $this->getTeacherBooks();
-
-		return $this->view('teacher-home', [
-			'books' => $teacherBooks,
-		]);
-	}
-
-	protected function getTeacherBooks()
-	{
-		$booksQuery = $this->db()->query("
-			SELECT * FROM books_borrowed
-			LEFT JOIN books ON books.id = books_borrowed.book_id
-		");
-
-		$books = $booksQuery->fetchAll(PDO::FETCH_CLASS, Book::class);
-
-		return $books;
 	}
 
 	public function registerTeacher(Request $request)

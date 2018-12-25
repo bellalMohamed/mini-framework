@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Teacher</title>
+    <title>Student</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -19,12 +19,7 @@
 <body>
 
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <h5 class="my-0 mr-md-auto font-weight-normal">Teacher Dashboard</h5>
-        <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="/admin/librarians">Librarian</a>
-            <a class="p-2 text-dark" href="/admin/books">Books</a>
-            <a class="p-2 text-dark" href="/admin/users">Users</a>
-        </nav>
+        <h5 class="my-0 mr-md-auto font-weight-normal">Student Dashboard</h5>
         <a class="btn btn-outline-primary" href="#">Logout</a>
     </div>
 
@@ -46,9 +41,9 @@
     <div class="container-fluid">
 
         <div class="row">
-            <div class="card col-md-12">
+            <div class="card col-md-8">
                 <div class="card-header">
-                    teachers
+                    My Books
                 </div>
                 <div class="card-body">
                     <table class="table">
@@ -57,6 +52,8 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Author</th>
+                                <th scope="col">Book ID</th>
+                                <th scope="col">Return date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,7 +62,9 @@
                         		<tr>
 	                                <th><?php echo $index + 1 ?></th>
 	                                <td><?php echo $book->name ?></td>
-	                                <td><?php echo $book->author ?></td>
+                                    <td><?php echo $book->author ?></td>
+                                    <td><?php echo $book->book_id ?></td>
+	                                <td><?php echo $book->return_date ?></td>
 	                            </tr>
 
                         	<?php } ?>
@@ -76,7 +75,6 @@
                 </div>
             </div>
         </div>
-        <br><br>
     </div>
 
 

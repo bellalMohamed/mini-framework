@@ -53,6 +53,7 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Author</th>
                                 <th scope="col">Book ID</th>
+                                <th scope="col">Return date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,7 +63,8 @@
 	                                <th><?php echo $index + 1 ?></th>
 	                                <td><?php echo $book->name ?></td>
                                     <td><?php echo $book->author ?></td>
-	                                <td><?php echo $book->book_id ?></td>
+                                    <td><?php echo $book->book_id ?></td>
+	                                <td><?php echo $book->return_date ?></td>
 	                            </tr>
 
                         	<?php } ?>

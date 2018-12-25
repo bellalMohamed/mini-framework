@@ -15,7 +15,7 @@ $app->get('/student/home', 'StudentController@index');
 $app->get('/teacher/login/index', 'TeacherController@teacherLoginIndex');
 $app->post('/teacher/login', 'TeacherController@loginTeacher');
 $app->post('/teacher/register', 'TeacherController@registerTeacher');
-$app->get('/teacher/home', 'TeacherController@teacherHome');
+$app->get('/teacher/home', 'TeacherController@index');
 
 
 
