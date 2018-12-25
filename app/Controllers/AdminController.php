@@ -114,7 +114,7 @@ class AdminController extends Controller
 	{
 		$userQuery = $this->db()->prepare("INSERT INTO books (name, author, copies, book_id) VALUES (?, ?, ?, ?)");
 
-		var_dump($userQuery->execute([$request->name, $request->author, $request->copies, uniqid()]));
+		$userQuery->execute([$request->name, $request->author, $request->copies, uniqid()]);
 		return true;
 	}
 

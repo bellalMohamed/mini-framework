@@ -55,8 +55,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Book Name</th>
-                                <th scope="col">Book Author</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
                                 <th scope="col">Books Left</th>
                                 <th scope="col">Update Limit</th>
                             </tr>

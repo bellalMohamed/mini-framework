@@ -10,6 +10,12 @@
 
 </head>
 <body>
-	Home Page
+	<a href="/student/login/index">Student Login/Register</a>
+	<br>
+	<a href="/teacher/login/index">Teacher Login/Register</a>
+	<br>
+	<a href="/admin/login/index">Admin Login</a>
+	<br>
+	<a href="/librarian/login/index">Librarian Login</a>
 </body>
 </html>

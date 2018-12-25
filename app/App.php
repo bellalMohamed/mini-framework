@@ -52,7 +52,9 @@ class App
 	public function run()
 	{
 		$router = $this->container->router;
-		$router->setPath($_SERVER['PHP_SELF'] ?? '/');
+		$uri = explode('?', $_SERVER['REQUEST_URI'], 2);
+
+		$router->setPath($uri[0] ?? '/');
 
 		try {
 			$response = $router->getResponse();

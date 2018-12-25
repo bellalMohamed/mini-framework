@@ -1,6 +1,7 @@
 <?php
 
 $app->get('/home', 'HomeController@index');
+$app->get('/', 'HomeController@index');
 
 
 $app->get('/student/login/index', 'StudentController@studentLoginIndex');
@@ -13,6 +14,7 @@ $app->post('/student/register', 'StudentController@registerStudent');
 $app->get('/teacher/login/index', 'TeacherController@teacherLoginIndex');
 $app->post('/teacher/login', 'TeacherController@loginTeacher');
 $app->post('/teacher/register', 'TeacherController@registerTeacher');
+$app->get('/teacher/home', 'TeacherController@teacherHome');
 
 
 
