@@ -38,6 +38,33 @@ class AdminController extends Controller
 		]);
 	}
 
+	public function editLibrarianIndex(Request $request)
+	{
+		$librarian = $this->getLibrarianById($request->id);
+
+		return $this->view('edit-librarian', [
+			'librarian' => $librarian,
+		]);
+	}
+
+	public function editLibrarian(Request $request)
+	{
+		$limitQuery = $this->db()->prepare("UPDATE librarians SET name = ?, email = ? WHERE id = ?");
+		$limitQuery->execute([$request->name, $request->email, $request->id]);
+
+		Session::flash('success', 'Librarian Updated Successfully');
+		return $this->back();
+	}
+
+	protected function getLibrarianById($librarianId)
+	{
+		$librariansQuery = $this->db()->prepare("SELECT id, name, email FROM librarians WHERE id = ?");
+		$librariansQuery->execute([$librarianId]);
+		$librarian = $librariansQuery->fetchAll(PDO::FETCH_CLASS, Librarian::class);
+
+		return $librarian[0];
+	}
+
 	public function userIndex()
 	{
 		$this->guardAgainstNonAdmins();

@@ -25,6 +25,8 @@ $app->post('/admin/login', 'AdminController@loginAdmin');
 $app->get('/admin/librarians', 'AdminController@librarianIndex');
 $app->post('/admin/librarian/new', 'AdminController@registerNewLibrarian');
 $app->get('/admin/librarian/delete', 'AdminController@deleteLibrarian');
+$app->get('/admin/librarian/edit/index', 'AdminController@editLibrarianIndex');
+$app->post('/admin/librarian/edit', 'AdminController@editLibrarian');
 
 $app->get('/admin/users/give/student', 'AdminController@giveBookToStudentIndex');
 $app->get('/admin/users/give/teacher', 'AdminController@giveBookToStudentIndex');

@@ -47,68 +47,24 @@
     <div class="container-fluid">
 
         <div class="row">
-            <div class="card col-md-4 col-sm-12">
+            <div class="card col-md-8 col-sm-12">
                 <div class="card-header">
                     Add Librarian
                 </div>
                 <div class="card-body">
-                    <form action="/admin/librarian/new" method="POST">
+                    <form action="/admin/librarian/edit" method="POST">
+                        <input type="hidden" name="id" value="<?php echo $librarian->id ?>">
                         <div class="form-group">
                             <label for="lib-name">Name</label>
-                            <input type="text" name="name" class="form-control" id="lib-name" placeholder="Name">
+                            <input type="text" name="name" class="form-control" id="lib-name" placeholder="Name" value="<?php echo $librarian->name ?>">
                         </div>
                         <div class="form-group">
                             <label for="lib-email">Email address</label>
-                            <input type="email" name="email" class="form-control" id="lib-email" placeholder="Enter email">
+                            <input type="email" name="email" class="form-control" id="lib-email" placeholder="Enter email" value="<?php echo $librarian->email ?>">
 
-                        </div>
-                        <div class="form-group">
-                            <label for="lib-password">Password</label>
-                            <input type="password" name="password" class="form-control" id="lib-password" placeholder="Password">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
-
-                </div>
-            </div>
-            <div class="card col-md-8">
-                <div class="card-header">
-                    All Librarian
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nama</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Edit</th>
-                                <th scope="col">Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        	<?php foreach ($librarians as $index => $librarian) {
-                        		?>
-                        		<tr>
-	                                <th><?php echo $index + 1 ?></th>
-	                                <td><?php echo $librarian->name ?></td>
-	                                <td><?php echo $librarian->email ?></td>
-	                                <td>
-	                                	<a href="/admin/librarian/edit/index?id=<?php echo $librarian->id ?>" class="btn btn-primary">
-	                                		Edit
-	                                	</a>
-                                	</td>
-                                    <td>
-                                        <a href="/admin/librarian/delete?id=<?php echo $librarian->id ?>" class="btn btn-danger">
-                                            Delete
-                                        </a>
-                                    </td>
-	                            </tr>
-
-                        	<?php } ?>
-
-                        </tbody>
-                    </table>
 
                 </div>
             </div>
