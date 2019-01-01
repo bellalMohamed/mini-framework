@@ -33,6 +33,7 @@ $app->get('/admin/users/give/teacher', 'AdminController@giveBookToStudentIndex')
 
 
 $app->get('/admin/books', 'AdminController@booksIndex');
+$app->get('/admin/books/delete', 'AdminController@deleteBook');
 $app->post('/admin/book/new', 'AdminController@newBook');
 
 $app->get('/admin/users', 'AdminController@userIndex');

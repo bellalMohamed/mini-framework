@@ -116,6 +116,18 @@ class AdminController extends Controller
 		]);
 	}
 
+	public function deleteBook(Request $request)
+	{
+		$this->guardAgainstNonAdmins();
+
+		$userQuery = $this->db()->prepare("DELETE FROM books WHERE id = ?");
+
+		$userQuery->execute([$request->id]);
+
+		Session::flash('success', 'Book deleted successfully');
+		return $this->back();
+	}
+
 	protected function getBooks()
 	{
 		$booksQuery = $this->db()->query("SELECT * FROM books");

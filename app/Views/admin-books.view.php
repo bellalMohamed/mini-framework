@@ -83,6 +83,7 @@
                                 <th scope="col">Author</th>
                                 <th scope="col">Copies</th>
                                 <th scope="col">Book ID</th>
+                                <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -93,7 +94,10 @@
 	                                <td><?php echo $book->name ?></td>
                                     <td><?php echo $book->author ?></td>
                                     <td><?php echo $book->copies ?></td>
-	                                <td><?php echo $book->book_id ?></td>
+                                    <td><?php echo $book->book_id ?></td>
+	                                <td>
+                                        <a href="/admin/books/delete?id=<?php echo $book->id ?>" class="btn btn-danger">Delete</a>
+                                    </td>
 	                            </tr>
 
                         	<?php } ?>
