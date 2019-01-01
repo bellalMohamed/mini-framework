@@ -20,7 +20,7 @@ class LibrarianController extends Controller
 		$teachers = $this->getTeachers();
 		// $booksBorrowed = $this->getBooksBorrowed();
 		// $studentsWithBorrowedBooks = $this->studentsWithBorrowedBooks();
-		$availableBooks = $this->getAvailableBooks();
+		$availableBooks = $this->getAvailableBooks($request);
 
 		// return $this->response()->json($availableBooks);
 		return $this->view('librarian-books', [
