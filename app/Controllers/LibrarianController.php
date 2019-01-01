@@ -32,7 +32,7 @@ class LibrarianController extends Controller
 
 	public function giveBookIndex(Request $request)
 	{
-		$books = $this->getAvailableBooks();
+		$books = $this->getAvailableBooks($request);
 		$userBook = $this->getUserBook($request);
 
 		return $this->view('give-book', [
@@ -96,18 +96,31 @@ class LibrarianController extends Controller
 		return $limit[0]->books;
 	}
 
-	protected function getAvailableBooks()
+	protected function getAvailableBooks($request)
 	{
 		$this->db()->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		$borrowerQuery = $this->db()->query("
-			SELECT books.id, books.name, books.copies, books_borrowed.book_id, COUNT(books_borrowed.book_id) AS borrows FROM books
-			LEFT JOIN books_borrowed ON books.id = books_borrowed.book_id
-			GROUP BY books.id
-			having books.copies > COUNT(books_borrowed.book_id)
-		");
+		if ($request->query) {
+			$borrowerQuery = $this->db()->query("
+				SELECT books.id, books.name, books.copies, books_borrowed.book_id, COUNT(books_borrowed.book_id) AS borrows FROM books
+				LEFT JOIN books_borrowed ON books.id = books_borrowed.book_id
+				WHERE books.name like '$request->query %'
+				GROUP BY books.id
+				having books.copies > COUNT(books_borrowed.book_id)
+			");
+		} else {
+			$borrowerQuery = $this->db()->query("
+				SELECT books.id, books.name, books.copies, books_borrowed.book_id, COUNT(books_borrowed.book_id) AS borrows FROM books
+				LEFT JOIN books_borrowed ON books.id = books_borrowed.book_id
+				GROUP BY books.id
+				having books.copies > COUNT(books_borrowed.book_id)
+			");
+		}
+
+
 
 		$books = $borrowerQuery->fetchAll(PDO::FETCH_CLASS, BookBorrowed::class);
+
 		return $books;
 	}
 

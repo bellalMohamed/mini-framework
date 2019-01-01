@@ -48,7 +48,13 @@
         <div class="row">
             <div class="card col-md-4 col-sm-12">
                 <div class="card-header">
-                    Add Librarian
+                    Give Book
+                    <form action="/librarian/give" method="get">
+                        <input type="text" name="query">
+                        <input type="hidden" name="id" value="<?php echo $id ?>">
+                        <input type="hidden" name="type" value="<?php echo $type ?>">
+                        <input type="submit" value="search">
+                    </form>
                 </div>
                 <div class="card-body">
                     <form action="/librarian/give/book" method="POST">
@@ -78,7 +84,7 @@
 
             <div class="card col-md-8">
                 <div class="card-header">
-                    All Librarian
+                    Given Book
                 </div>
                 <div class="card-body">
                     <table class="table">
